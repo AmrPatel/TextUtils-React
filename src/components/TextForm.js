@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 export default function TextForm(props) {
-    
+
     const handleUpClick = () => {
         let upperCase = text.toUpperCase();
         setText(upperCase);
@@ -11,13 +11,14 @@ export default function TextForm(props) {
         let lowerCase = text.toLowerCase();
         setText(lowerCase);
     }
-    
+
     const handleOnChange = (event) => {
         setText(event.target.value)
     }
 
     const handleClearClick = (event) => {
         setText("")
+        props.showAlert("Text cleared","success")
     }
 
     const showFile = (e) => {
@@ -38,25 +39,15 @@ export default function TextForm(props) {
                 <div className="mb-3">
                     <textarea className="form-control" value={text} onChange={handleOnChange} id="txtBox" rows="8"></textarea>
                 </div>
-                <div className="row">
-                    <div className="col-3">
-                        <input type="file" className="form-control" onChange={(e) => showFile(e)} />
-                    </div>
-                    <div className="col-2">
-                        <button className="btn btn-primary mx-1" onClick={handleUpClick}>Convert to Uppercase</button>
-                    </div>
-                    <div className="col-2">
-                        <button className="btn btn-primary mx-1" onClick={handleLoClick}>Convert to Lowercase</button>
-                    </div>
-                    <div className="col-1">
-                        <button className="btn btn-primary mx-1" onClick={handleClearClick}>Clear</button>
-                    </div>
-                </div>
+                <input type="file" className="form-control" onChange={(e) => showFile(e)} />
+                <button className="btn btn-primary mx-1 my-1" onClick={handleUpClick}>Convert to Uppercase</button>
+                <button className="btn btn-primary mx-1 my-1" onClick={handleLoClick}>Convert to Lowercase</button>
+                <button className="btn btn-primary mx-1 my-1" onClick={handleClearClick}>Clear</button>
             </div>
             <div className="container my-2">
                 <h3 className=''>Text Summary</h3>
                 <p>{text.split(' ').filter(function (n) { return n !== '' }).length} Words and {text.trim().length} Characters</p>
-                <p>{text.length > 1 ? 0.008 * text.split(" ").length : 0} Minutes read </p>
+                <p>{0.008 * text.split(" ").filter(function (n) { return n !== '' }).length} Minutes read </p>
                 <h3>Preview</h3>
                 <p>{text}</p>
             </div>
